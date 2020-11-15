@@ -10,6 +10,7 @@ cuda_10.2.1_win10
 
 For enabling each code/solution, enable a particular "#define" in the file "Enable_Que.h"
 Compile and see the output on console
+Note : Please check your paths and adapt to the project paths as per your location
 
 Happy learning.
 
