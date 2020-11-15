@@ -1,7 +1,7 @@
 #pragma once
-
+#define ELEM 8
 //Device code for printing
-#define HELLO_WORLD
+//#define HELLO_WORLD
 
 //Device code for printing threadId
 //#define THREAD_ID
@@ -12,5 +12,5 @@
 //Exercise 1 
 //#define EXERCISE_1
 
-//#define UNIQUE_INDEX
+#define UNIQUE_INDEX
 

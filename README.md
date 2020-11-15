@@ -8,7 +8,7 @@ Visual Studio 2019 (Version can vary)
 Nvidia Toolkit for your compatible GPU (Used is Nvidia GTX1650, Tesla T4)
 cuda_10.2.1_win10
 
-For enabling each code/solution, enable a particular "#define" in the file "Enable_Que.h"
+For enabling each code/solution, enable a particular "#define" in the file "Enable_Que.h" at location : ..your path..\CUDA\Cuda_Learning\Cuda_Learning\src
 Compile and see the output on console
 Note : Please check your paths and adapt to the project paths as per your location
 

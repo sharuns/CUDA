@@ -21,6 +21,7 @@
 #include "Enable_Que.h"
 #include <stdio.h>
 #include <iostream>
+#include <array>
 
 //===============================================================
 //
@@ -90,6 +91,29 @@ __global__ void PrintExercise_1() {
 	);
 
 }
+#endif
+
+#ifdef UNIQUE_INDEX
+//===============================================================
+//!
+//! brief : Device code for provide a particular data to a thread
+//! 
+//! args : pointer to an array of integers
+//!
+__global__ void Unique_Id_Cal( int * Array ) {
+
+	int thrdId = threadIdx.x;
+	printf("Thread Id : %d Value : %d\n", thrdId, Array[thrdId]);
+}
+
+__global__ void Unique_Id_Auto_Cal(int* Array) {
+
+	int Offset = blockIdx.x * blockDim.x;
+	int thrdId = threadIdx.x;
+	int index = thrdId + Offset;
+	printf("Thread Id : %d Index : %d Value : %d\n", thrdId,index, Array[index]);
+}
+
 #endif 
 
 
@@ -165,6 +189,26 @@ int main() {
 
 
 #ifdef UNIQUE_INDEX
+
+	int host_Arr[] = { 23,4,2,2,4,5,564,34 };
+	int size = sizeof(int) * ELEM;
+	int* gpu_data;
+	cudaMalloc((void **)&gpu_data,size);
+	cudaMemcpy(gpu_data, host_Arr, size, cudaMemcpyHostToDevice);
+
+	dim3 grid(1,1,1);
+	dim3 block(8,1,1);
+
+	Unique_Id_Cal << <grid,block >> > (gpu_data);
+	cudaDeviceSynchronize();
+	std::cout << "##################################" << std::endl;
+
+
+	dim3 grid1(4, 1, 1);
+	dim3 block1(2, 1, 1);
+
+	Unique_Id_Auto_Cal << <grid1,block1 >> > (gpu_data);
+
 
 #endif
 	cudaDeviceSynchronize();
