@@ -114,6 +114,15 @@ __global__ void Unique_Id_Auto_Cal(int* Array) {
 	printf("Thread Id : %d Index : %d Value : %d\n", thrdId,index, Array[index]);
 }
 
+__global__ void Unique_Id_Cal_2D(int* Array) {
+	int rowOffset = gridDim.x * blockDim.x * blockIdx.y;
+	int blockOffset = blockIdx.x * blockDim.x;
+	int thrdId = threadIdx.x;
+	int index = thrdId + rowOffset + blockOffset;
+	printf("Thread Id : %d Index : %d Value : %d\n", thrdId, index, Array[index]);
+
+}
+
 #endif 
 
 
@@ -199,15 +208,22 @@ int main() {
 	dim3 grid(1,1,1);
 	dim3 block(8,1,1);
 
-	Unique_Id_Cal << <grid,block >> > (gpu_data);
+	Unique_Id_Cal << <grid,block >> > (gpu_data); // 1 thread block with n threads
 	cudaDeviceSynchronize();
 	std::cout << "##################################" << std::endl;
 
 
 	dim3 grid1(4, 1, 1);
 	dim3 block1(2, 1, 1);
+	Unique_Id_Auto_Cal << <grid1,block1 >> > (gpu_data); //2 thread in same dimension with in total n threads
+	cudaDeviceSynchronize();
+	std::cout << "##################################" << std::endl;
 
-	Unique_Id_Auto_Cal << <grid1,block1 >> > (gpu_data);
+
+	dim3 grid2(2, 2, 1);
+	dim3 block2(2, 1, 1);
+	Unique_Id_Cal_2D << <grid2, block2 >> > (gpu_data); // 2 D arrangement
+	
 
 
 #endif
