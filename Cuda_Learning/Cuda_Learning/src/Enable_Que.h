@@ -12,5 +12,8 @@
 //Exercise 1 
 //#define EXERCISE_1
 
-#define UNIQUE_INDEX
+//Code which demostrate how to acces unique location in a array for each thread
+//#define UNIQUE_INDEX
 
+//Memory transfer basic example
+#define CUDA_MEM_TRNSFR

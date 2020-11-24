@@ -126,6 +126,17 @@ __global__ void Unique_Id_Cal_2D(int* Array) {
 #endif 
 
 
+#ifdef CUDA_MEM_TRNSFR
+
+__global__ void MemTransferTest(int* mem) {
+
+	int gId = threadIdx.x + (blockIdx.x * blockDim.x);
+	printf("mem[%d] : %d\n",gId,mem[gId]);
+}
+
+
+#endif
+
 //===============================================================
 //!
 //! brief : Main Driver method
@@ -224,11 +235,40 @@ int main() {
 	dim3 block2(2, 1, 1);
 	Unique_Id_Cal_2D << <grid2, block2 >> > (gpu_data); // 2 D arrangement
 	
-
-
 #endif
+
+#ifdef CUDA_MEM_TRNSFR
+	
+	int memSize = 128;
+	int byteSize = memSize * sizeof(int);
+
+	int* host_mem_ptr = (int*)malloc(byteSize);
+
+	//intialise the allocated memory
+	for (int i = 0; i < memSize; ++i) {
+		host_mem_ptr[i] = i + 12;
+	}
+
+	//allocating memory in gpu
+	int* gpu_mem_ptr;
+	cudaMalloc((void**)&gpu_mem_ptr, byteSize);
+
+	//transfering memory from host to device (GPU)
+	cudaMemcpy(gpu_mem_ptr, host_mem_ptr, byteSize, cudaMemcpyHostToDevice);
+
+	dim3 grid(2, 1, 1);
+	dim3 block(64, 1, 1);
+
+	//invoking kernel
+	MemTransferTest << <grid,block >> > (gpu_mem_ptr);
+	
+#endif
+
 	cudaDeviceSynchronize();
 
+#ifdef CUDA_MEM_TRNSFR	
+	free(host_mem_ptr);
+#endif
 	cudaDeviceReset();
 
 	return 0;
