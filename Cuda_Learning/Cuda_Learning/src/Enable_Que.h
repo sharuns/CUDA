@@ -16,4 +16,24 @@
 //#define UNIQUE_INDEX
 
 //Memory transfer basic example
-#define CUDA_MEM_TRNSFR
+//#define CUDA_MEM_TRNSFR
+
+//#define EXERCISE_2
+
+//Sum of 2 integer arrays and check if results are correct
+//#define VALIDITY_CHECK
+
+
+//Error handling ways in CUDA used
+//#define ERROR_HANDLE
+
+//Device Properties
+//#define DEV_PROP
+
+//for measuring branch efficency of a thread
+#define BRANCH_EFFICIENCY
+
+
+
+
+

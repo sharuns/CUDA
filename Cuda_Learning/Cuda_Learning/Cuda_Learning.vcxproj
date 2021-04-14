@@ -88,6 +88,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Enable_Que.h" />
+    <ClInclude Include="src\Functions.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\Functions.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
